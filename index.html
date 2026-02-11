@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffd6e0, #ff9aa2);
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+}
+
+.container {
+  z-index: 2;
+  max-width: 320px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  min-height: 60px;
+}
+
+p { opacity: 0.9; }
+
+.buttons { margin-top: 20px; }
+
+button {
+  padding: 10px 16px;
+  margin: 6px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.2s;
+  position: relative;
+}
+
+.yes { background: #ff4d6d; color: white; }
+.more { background: white; color: #ff4d6d; }
+
+/* NEW NO BUTTON */
+.no {
+  background: #888;
+  color: white;
+  position: absolute;
+}
+
+button:hover { transform: scale(1.1); }
+.buttons {
+margin-right: 15px;
+  align-items: center; /* centers all buttons horizontally */
+}
+
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear forwards;
+}
+@keyframes floatUp {
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* Hug bounce */
+.hug {
+  font-size: 2rem;
+  margin-top: 10px;
+  animation: bounce 1s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="typing"></h1>
+
+  <div class="buttons" style="margin-right: 22px;">
+    <button  class="yes" onclick="forgive()">Maafin sam2 ❤️ </button>
+    <button class="more" onclick="moreHugs()">Peyukkk 🤗</button>
+    <button id="noBtn" class="no" onclick="shrinkNo()">Gamau 😤</button>
+  </div>
+
+  <div id="hugArea"></div>
+</div>
+
+<!-- optional music -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b3b1e6c9f.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Typing animation */
+const text = "Maafin sam2 ya picanggg🥺🥺";
+let i = 0;
+function type() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text[i];
+    i++;
+    setTimeout(type, 70);
+  }
+}
+type();
+
+/* Floating hearts */
+function createHeart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = 3 + Math.random() * 2 + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 5000);
+}
+setInterval(createHeart, 400);
+
+/* More hugs */
+function moreHugs() {
+  const hug = document.createElement("div");
+  hug.className = "hug";
+  hug.innerText = "🤗🤗🤗";
+  document.getElementById("hugArea").appendChild(hug);
+  document.getElementById("music").play().catch(()=>{});
+}
+
+/* Forgive → confetti */
+function forgive() {
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},80%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+  document.getElementById("typing").innerHTML = "Yay!! Thank you ❤️🥹";
+}
+
+/* NO BUTTON SHRINK + RUN AWAY */
+const noBtn = document.getElementById("noBtn");
+let scale = 1;
+
+function shrinkNo() {
+  scale -= 0.15;
+  if (scale < 0.2) {
+    noBtn.style.display = "none";
+    // noBtn.innerText = "Yaudah maafin 😭";
+    // noBtn.onclick = forgive;
+  }
+  noBtn.style.transform = `scale(${scale})`;
+}
+
+/* Move when hovered */
+// noBtn.addEventListener("mouseenter", () => {
+//   const x = Math.random() * (window.innerWidth - 100);
+//   const y = Math.random() * (window.innerHeight - 50);
+//   noBtn.style.left = x + "px";
+//   noBtn.style.top = y + "px";
+// });
+</script>
+
+</body>
+</html>
